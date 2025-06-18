@@ -1,0 +1,40 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "qalgo"
+version = "0.0.2"
+dependencies = ["pysparq"]
+requires-python = ">=3.9"
+authors = [{ name = "TiMidlY", email = "mytan@mail.ustc.edu.cn" }]
+description = "A package for implementing quantum algorithms using the pysparq package."
+readme = "README.md"
+license = "Apache-2.0"
+
+keywords = ["quantum", "algorithm", "pysparq"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Quantum Computing",
+    "Topic :: Software Development",
+    "Typing :: Typed",
+]
+
+
+
+[project.urls]
+Repository = "https://github.com/TMYTiMidlY/QuantumAlgorithm.git"
