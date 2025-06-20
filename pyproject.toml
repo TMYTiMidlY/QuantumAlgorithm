@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "qalgo"
-version = "0.0.1"
+version = "0.0.1.dev1"
 dependencies = ["pysparq>=0.0.2.dev1", "scipy"]
 requires-python = ">=3.9"
 authors = [{ name = "TiMidlY", email = "mytan@mail.ustc.edu.cn" }]
@@ -51,3 +51,12 @@ commands = [["pytest"]]
 # description = "run type check on code base"
 # deps = ["mypy==1.11.2", "types-cachetools>=5.5.0.20240820", "types-chardet>=5.0.4.6"]
 # commands = [["mypy", "src{/}tox"], ["mypy", "tests"]]
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "$version"
+version_scheme = "pep440"
+version_provider = "pep621"
+update_changelog_on_bump = true
+major_version_zero = true
+
