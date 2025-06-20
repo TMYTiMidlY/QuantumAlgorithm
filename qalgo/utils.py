@@ -64,7 +64,11 @@ def condest(A, splu_opt={}, onenormest_opt={}) -> float:
     if A.shape[0] == 0:
         raise ValueError("cond is not defined on empty arrays")
 
-    A = sps.csc_array(A) 
+    A = sps.csc_array(A)
+    print(
+        f"Ignoring {np.sum(A.diagonal() == 0)} rows/cols with zero diagonal entries\
+            while while estimating condition number."
+    )
     nonzero_diag_indices = np.nonzero(A.diagonal())[0]
     A = A[nonzero_diag_indices, :][:, nonzero_diag_indices]
 
@@ -83,7 +87,7 @@ def condest(A, splu_opt={}, onenormest_opt={}) -> float:
         return decomposition.solve(rhs, trans="H")
 
     # Create a linear operator for the matrix inverse.
-    op = sla.LinearOperator(A.shape, matvec=matvec, rmatvec=rmatvec) # type: ignore
+    op = sla.LinearOperator(A.shape, matvec=matvec, rmatvec=rmatvec)  # type: ignore
 
     # Compute the 1-norm of the matrix inverse (estimate).
     nrm_inv = sla.onenormest(op, **onenormest_opt)
@@ -92,6 +96,6 @@ def condest(A, splu_opt={}, onenormest_opt={}) -> float:
     nrm_ori = sla.onenormest(A, **onenormest_opt)
 
     # Compute an estimate of the condition number.
-    c = nrm_ori * nrm_inv # type: ignore
+    c = nrm_ori * nrm_inv  # type: ignore
 
     return c
