@@ -13,6 +13,25 @@ def next_power_of_2(n: int) -> int:
     return 2 ** int(np.ceil(np.log2(n)))
 
 
+def make_complement(data: np.int64, data_sz: int) -> np.int64:
+    """
+    Compute the unsigned complement representation of an integer
+    within a data_sz-bit space.
+    """
+    if data_sz == 64 or data >= 0:
+        return data
+    return (1 << data_sz) + data  # Equivalent to 2**data_sz + data
+
+
+def get_complement(data: np.uint64, data_sz: int) -> np.int64:
+    """
+    Extends the sign of the lower data_sz bits of data.
+    """
+    if data_sz == 0:
+        return np.int64(0)
+    return (data << (64 - data_sz)) >> (64 - data_sz)
+
+
 def condest(A, splu_opt={}, onenormest_opt={}) -> float:
     """
     Compute an estimate of the 1-norm condition number of a sparse matrix.
