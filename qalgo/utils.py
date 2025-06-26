@@ -85,8 +85,8 @@ def condest(A, splu_opt={}, onenormest_opt={}) -> float:
 
     A = sps.csc_array(A)
     print(
-        f"Ignoring {np.sum(A.diagonal() == 0)} rows/cols with zero diagonal entries\
-            while while estimating condition number."
+        f"Ignoring {np.sum(A.diagonal() == 0)} rows/cols with zero diagonal entries \
+while estimating condition number."
     )
     nonzero_diag_indices = np.nonzero(A.diagonal())[0]
     A = A[nonzero_diag_indices, :][:, nonzero_diag_indices]

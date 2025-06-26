@@ -48,5 +48,3 @@ class DenseVector:
                 )
 
 
-def qda_solve(A, b, *args, **kwargs):
-    return np.array(sq.qda_solve(DenseMatrix(A), DenseVector(b), *args, **kwargs))
