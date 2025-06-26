@@ -117,4 +117,4 @@ while estimating condition number."
     # Compute an estimate of the condition number.
     c = nrm_ori * nrm_inv  # type: ignore
 
-    return c
+    return float(c)
