@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "qalgo"
-version = "0.0.1"
+version = "0.1.0"
 dependencies = ["pysparq==0.0.2", "scipy"]
 requires-python = ">=3.10"
 authors = [{ name = "TiMidlY", email = "mytan@mail.ustc.edu.cn" }]
