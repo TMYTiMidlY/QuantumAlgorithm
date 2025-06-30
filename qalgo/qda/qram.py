@@ -1,14 +1,17 @@
+from dataclasses import dataclass
+from typing import Callable, Optional
+
 import numpy as np
 import pysparq as sq
+from numpy.typing import NDArray
 
-from typing import Callable, Optional
-from .. import wrapper, utils
+from .. import utils
 from .fundamental import (
-    get_fidelity,
-    compute_step_rate,
-    scale_and_convert_vector,
-    make_vector_tree,
     QDADebugger,
+    compute_step_rate,
+    get_fidelity,
+    make_vector_tree,
+    scale_and_convert_vector,
 )
 
 
@@ -58,40 +61,23 @@ class Walk_s_via_QRAM_Debug:
         return self.debugger.get_mid_eigenstate()
 
 
+@dataclass
 class WalkSequence_via_QRAM_Debug:
-    def __init__(
-        self,
-        qram_A,
-        qram_b,
-        matrix_A,
-        vector_b,
-        main_reg,
-        anc_UA,
-        anc_1,
-        anc_2,
-        anc_3,
-        anc_4,
-        steps,
-        kappa,
-        p,
-        data_size,
-        rational_size,
-    ):
-        self.qram_A = qram_A
-        self.qram_b = qram_b
-        self.matrix_A = matrix_A
-        self.vector_b = vector_b
-        self.main_reg = main_reg
-        self.anc_UA = anc_UA
-        self.anc_1 = anc_1
-        self.anc_2 = anc_2
-        self.anc_3 = anc_3
-        self.anc_4 = anc_4
-        self.steps = steps
-        self.kappa = kappa
-        self.p = p
-        self.data_size = data_size
-        self.rational_size = rational_size
+    qram_A: sq.QRAMCircuit_qutrit
+    qram_b: sq.QRAMCircuit_qutrit
+    matrix_A: NDArray[np.float64]
+    vector_b: NDArray[np.float64]
+    main_reg: str
+    anc_UA: str
+    anc_1: str
+    anc_2: str
+    anc_3: str
+    anc_4: str
+    steps: int
+    kappa: float
+    p: float
+    data_size: int
+    rational_size: int
 
     def __call__(self, state):
         for n in range(self.steps):
@@ -117,14 +103,10 @@ class WalkSequence_via_QRAM_Debug:
             sq.ClearZero()(state)
 
             if (n + 1) % 2 == 0:
-                mid_state, p_success = sq.GetOutput(
-                    self.main_reg,
-                    self.anc_UA,
-                    self.anc_4,
-                    self.anc_3,
-                    self.anc_2,
-                    self.anc_1,
-                )(state)
+                mid_state, p_success = sq.PartialTraceSelect(
+                    {self.anc_UA: 0, self.anc_2: 0, self.anc_3: 0}
+                ).get_projected_full(state)
+                mid_state = np.array(mid_state, dtype=np.complex128).real
                 ideal_state = walk.get_mid_eigenstate()
                 fidelity = get_fidelity(ideal_state, mid_state)
 
@@ -263,6 +245,8 @@ def solve(
     p: float = 1.3,
     step_rate: float = 0.01,
 ) -> np.ndarray:
+    A, b, recover_x = classical2quantum(A, b)
+    
     if kappa is None:
         kappa = utils.condest(A)
     print(f"{kappa = }")
@@ -323,27 +307,15 @@ def solve(
     )(state)
 
     # Calculate the total probability of the subspace where anc_UA, anc_2, anc_3 are 0
-    prob_inv0 = sq.PartialTraceSelect({"anc_UA": 0, "anc_2": 0, "anc_3": 0})(state)
+    prob_inv0 = sq.PartialTraceSelect({anc_UA: 0, anc_2: 0, anc_3: 0})(state)
     prob0 = (1.0 / prob_inv0) ** 2
 
     print("Success probability after walk sequence:", prob0)
 
-    # Extract the subsystem state
-    result = sq.GetOutput(
-        "main_reg",
-        "anc_UA",
-        "anc_1",
-        "anc_2",
-        "anc_3",
-        "anc_4",
-    )(state)  # -> (state_vector, p_success)
+    sol, _ = sq.PartialTraceSelect(
+        {anc_UA: 0, anc_1: 1, anc_2: 0, anc_3: 0, anc_4: 0}
+    ).get_projected_full(state)
+    sol = np.array(sol, np.complex128)
+    sol = recover_x(sol.real)
 
-    for s in state.basis_states:
-        print(s.to_string(16))
-
-    state_ps = result[0]
-    # anc_4_0 = state_ps[: len(state_ps) // 2]
-    # anc_1_1 = anc_4_0[len(anc_4_0) // 2 :]
-    temp = state_ps[len(state_ps)//2:]
-    
-    return np.array(temp[:len(temp)//2]).real
+    return sol

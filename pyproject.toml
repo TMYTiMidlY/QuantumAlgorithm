@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "qalgo"
-version = "0.0.1.dev3"
-dependencies = ["pysparq>=0.0.2.dev2", "scipy"]
+version = "0.0.1"
+dependencies = ["pysparq==0.0.2", "scipy"]
 requires-python = ">=3.10"
 authors = [{ name = "TiMidlY", email = "mytan@mail.ustc.edu.cn" }]
 description = "A package for implementing quantum algorithms using the pysparq package."
@@ -44,7 +44,7 @@ env_list = ["3.12"]
 
 [tool.tox.env_run_base]
 description = "Run test under {base_python}"
-deps = ["pytest>=8", "pytest-sugar"]
+deps = ["pytest>=8", "pytest-sugar", "dowhen"]
 commands = [["pytest"]]
 
 # [tool.tox.env.type]
@@ -59,4 +59,3 @@ version_scheme = "pep440"
 version_provider = "pep621"
 update_changelog_on_bump = true
 major_version_zero = true
-

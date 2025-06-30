@@ -2,6 +2,8 @@ import numpy as np
 import qalgo as qa
 from qalgo import qda
 import pysparq as sq
+from dowhen import do
+
 
 def generate(zero=True) -> tuple[np.ndarray, np.ndarray]:
     if zero:
@@ -29,16 +31,12 @@ def generate(zero=True) -> tuple[np.ndarray, np.ndarray]:
     return A, b
 
 
-def test_entire_process():
+def test_correctness():
     sq.System.clear()
 
     A, b = generate(zero=False)
 
-    A_q, b_q, recover_x = qda.classical2quantum(A, b)
-
-    x_q = qda.solve(A_q, b_q, kappa=qa.condest(A))
-    print(f"{x_q = }")
-    x_hat = recover_x(x_q)
+    x_hat = qda.solve(A, b, kappa=qa.condest(A))
 
     # minimize || b - norm A x_hat ||, get norm of x
     y = np.dot(A, x_hat)
@@ -46,7 +44,7 @@ def test_entire_process():
 
     x = norm * x_hat
 
-    x_reference = np.linalg.solve(A_q, b_q)
+    x_reference = np.linalg.solve(A, b)
     x_reference_hat = x_reference / np.linalg.norm(x_reference)
 
     print(f"{x = }")
@@ -71,9 +69,14 @@ def test_classical2quantum():
     assert b_q.shape == (8,), "Quantum vector b_q should have length 4."
     assert callable(recover_x), "recover_x should be a callable function."
 
-    x_q = qda.solve(A_q, b_q, kappa=qa.condest(A))
-    x_hat = recover_x(x_q)
-    _x_hat = _recover_x(x_q)
+    x_hat = qda.solve(A, b, kappa=qa.condest(A))
+
+    sq.System.clear()
+    do("classical2quantum = sq.qda_classical2quantum").when(
+        qda.solve, "A, b, recover_x = classical2quantum(A, b)"
+    )  # Monkey patch
+
+    _x_hat = qda.solve(A, b, kappa=qa.condest(A))
 
     assert np.allclose(x_hat, _x_hat), "Recovered vector x_hat should match _x_hat."
 
@@ -85,11 +88,11 @@ def test_solve():
 
     A, b = generate(zero=False)
 
-    A_q, b_q, recover_x = qda.classical2quantum(A, b)
+    x_hat = qda.solve(A, b, kappa=qa.condest(A))
 
-    x_q = qda.solve(A_q, b_q, kappa=qa.condest(A))
-    _x_q = qda._solve(A_q, b_q, kappa=qa.condest(A))
+    sq.System.clear()
+    _x_hat = qda._solve(A, b, kappa=qa.condest(A))
 
-    assert np.allclose(x_q, _x_q[4:8]), "Quantum solution x_q should match _x_q."
+    assert np.allclose(x_hat, _x_hat), "Quantum solution x_q should match _x_q."
 
-    assert x_q.shape == (4,), "Recovered vector x_hat should have length 4."
+    assert x_hat.shape == (4,), "Recovered vector x_hat should have length 4."

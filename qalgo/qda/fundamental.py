@@ -203,7 +203,14 @@ def make_vector_tree(dist: NDArray[np.uint64], data_size: int) -> NDArray[np.uin
 
 
 def get_fidelity(
-    state: list[complex] | list[float], target: list[complex] | list[float]
+    state: NDArray[np.complexfloating]
+    | NDArray[np.floating]
+    | list[complex]
+    | list[float],
+    target: NDArray[np.complexfloating]
+    | NDArray[np.floating]
+    | list[complex]
+    | list[float],
 ) -> float:
     if len(state) == 0:
         return 0.0
@@ -220,4 +227,4 @@ def get_fidelity(
         for s, t in zip(state, target):
             sum_val += s * t
 
-    return abs(sum_val)
+    return float(abs(sum_val))

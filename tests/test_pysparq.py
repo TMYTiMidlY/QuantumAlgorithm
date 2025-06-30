@@ -1,6 +1,10 @@
 import qalgo as qa
 from qalgo import qda
-import pysparq
+import pysparq as sq
 
 def test_import():
-    pysparq.test_import()
+    sq.test_import()
+
+
+def test_simple_program():
+    sq.test_simple_program()
