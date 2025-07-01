@@ -108,26 +108,6 @@ class QDADebugger:
         print(f"fs = {self.fs}")
         n = self.row_size
 
-        # match self.fs:
-        #     case 0:
-        #         vec = self.get_vector_0b()
-        #     case 1:
-        #         sol = np.linalg.solve(self.matrix_A, self.vector_b)
-        #         sol /= np.linalg.norm(sol)
-        #         vec = np.concatenate([np.zeros(n), sol])
-        #     case _ if 0 < self.fs < 1:
-        #         Af = self.get_matrix_Af()
-        #         b = self.get_vector_0b()
-        #         sol = np.linalg.solve(Af, b)
-        #         sol /= np.linalg.norm(sol)
-        #         vec = sol
-        #     case _:
-        #         raise RuntimeError(
-        #             f"Invalid fs value: {self.fs}. Expected 0 <= fs <= 1."
-        #         )
-
-        # match statement only works for python 3.10+
-        # Fix this by using if-else statements
         if self.fs == 0:
             vec = self.get_vector_0b()
         elif self.fs == 1:
