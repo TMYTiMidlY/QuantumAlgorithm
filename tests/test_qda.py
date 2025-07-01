@@ -13,7 +13,7 @@ def generate(zero=True) -> tuple[np.ndarray, np.ndarray]:
                 [2, 1, 4, 0, 5],
                 [3, 4, 1, 0, 6],
                 [0, 0, 0, 0, 0],
-                [4, 5, 6, 0, 1.0],
+                [4, 5, 6, 0, 1],
             ]
         )
         b = np.array([3, 4.5, 11.8, 0, 0.2])
@@ -23,7 +23,7 @@ def generate(zero=True) -> tuple[np.ndarray, np.ndarray]:
                 [1, 2, 3, 4],
                 [2, 1, 4, 5],
                 [3, 4, 1, 6],
-                [4, 5, 6, 1.0],
+                [4, 5, 6, 1],
             ]
         )
         b = np.array([3, 4.5, 11.8, 0.2])

@@ -146,8 +146,10 @@ class WalkSequence_via_QRAM_Debug:
 
 
 def classical2quantum(
-    A_c: np.ndarray, b_c: np.ndarray
-) -> tuple[np.ndarray, np.ndarray, Callable[[np.ndarray], np.ndarray]]:
+    A_c: np.ndarray | list, b_c: np.ndarray | list
+) -> tuple[
+    NDArray[np.float64], NDArray[np.float64], Callable[[np.ndarray], np.ndarray]
+]:
     """
     Convert a classical linear system Ax = b to quantum-compatible form
 
@@ -156,6 +158,9 @@ def classical2quantum(
         b_q: Corresponding right-hand side vector
         recover_x: Function to recover original solution from quantum solution
     """
+    A_c = np.array(A_c, dtype=np.float64)
+    b_c = np.array(b_c, dtype=np.float64)
+
     if A_c.shape[0] != A_c.shape[1]:
         raise ValueError("Input matrix A_c must be square.")
     if A_c.shape[0] != b_c.size:
@@ -171,7 +176,7 @@ def classical2quantum(
     # A more robust check than `is_hermitian` for very small matrices or specific structures
     # might be needed, but `np.allclose` is generally good.
     if utils.is_hermitian(A_c):
-        print("Input A is already Hermitian.")
+        # print("Input A is already Hermitian.")
         A_herm = A_c.copy()
         b_herm = b_c.copy()
     else:
@@ -190,7 +195,7 @@ def classical2quantum(
     padded_dim = utils.next_power_of_2(herm_dim)
 
     if padded_dim == herm_dim:
-        print("Dimension is already a power of 2.")
+        # print("Dimension is already a power of 2.")
         A_q = A_herm
         b_q = b_herm
     else:
@@ -235,7 +240,7 @@ def classical2quantum(
                 )
             return x_herm
 
-    return A_q, b_q, recover_x
+    return np.array(A_q, dtype=np.float64), np.array(b_q, dtype=np.float64), recover_x
 
 
 def solve(
@@ -245,14 +250,17 @@ def solve(
     p: float = 1.3,
     step_rate: float = 0.01,
 ) -> np.ndarray:
-    A, b, recover_x = classical2quantum(A, b)
-    
+    A = np.array(A, dtype=np.float64)
+    b = np.array(b, dtype=np.float64)
+
     if kappa is None:
         kappa = utils.condest(A)
     print(f"{kappa = }")
 
     steps = compute_step_rate(step_rate, kappa)
     print(f"{steps = }")
+
+    A, b, recover_x = classical2quantum(A, b)
 
     data_size = 50
     rational_size = 51
