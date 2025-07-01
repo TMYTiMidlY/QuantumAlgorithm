@@ -5,7 +5,14 @@ site_url: https://qalgo.readthedocs.io/
 
 nav:
   - Home: index.md
+  - Getting Started: start.md
+  - Usage: usage.md
+  - Algorithms:
+      - Quantum Discrete Adiabatic: algorithms/qda.md
+  - PySparQ Reference: pysparq.md
+  - Development: development.md
   - API Reference: api.md
+  - About: about.md
 
 theme:
   name: material

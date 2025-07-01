@@ -1,0 +1,2 @@
+# PySparQ 参考
+由于pysparq缺乏完整文档，这里提供qalgo开发中必需的pysparq知识
