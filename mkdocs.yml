@@ -1,8 +1,15 @@
-site_name: MkLorum
+site_name: Quantum Algorithm Documentation
+site_description: 用稀疏态模拟器PySparQ实现的量子算法
+site_author: USTC-IAI量子计算团队
+site_url: https://qalgo.readthedocs.io/
 
 nav:
   - Home: index.md
-  - About: about.md
+  - API Reference: api.md
 
-theme: 
+theme:
   name: material
+
+plugins:
+  - search
+  - mkdocstrings
