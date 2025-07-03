@@ -8,3 +8,8 @@ def test_import():
 
 def test_simple_program():
     sq.test_simple_program()
+
+
+if __name__ == '__main__':
+    test_import()
+    test_simple_program()

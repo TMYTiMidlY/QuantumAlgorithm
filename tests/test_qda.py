@@ -96,3 +96,8 @@ def test_solve():
     assert np.allclose(x_hat, _x_hat), "Quantum solution x_q should match _x_q."
 
     assert x_hat.shape == (4,), "Recovered vector x_hat should have length 4."
+
+if __name__ == "__main__":
+    test_correctness()
+    test_classical2quantum()
+    test_solve()
