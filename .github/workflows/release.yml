@@ -75,35 +75,19 @@ jobs:
             
         - name: Create Release
           id: create_release
-          uses: actions/create-release@v1
+          uses: softprops/action-gh-release@v1
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
             tag_name: v${{ steps.get_version.outputs.version }}
-            release_name: v${{ steps.get_version.outputs.version }}
+            name: Release v${{ steps.get_version.outputs.version }}
             body_path: /tmp/changelog.txt
+            files: |
+              dist/*.tar.gz
+              dist/*.whl
             draft: false
             prerelease: false
 
-        - name: Upload Source Distribution to Release
-          uses: actions/upload-release-asset@v1
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          with:
-            upload_url: ${{ steps.create_release.outputs.upload_url }}
-            asset_path: dist/qalgo-${{ steps.get_version.outputs.version }}.tar.gz
-            asset_name: qalgo-${{ steps.get_version.outputs.version }}.tar.gz
-            asset_content_type: application/gzip
-
-        - name: Upload Wheel Distribution to Release
-          uses: actions/upload-release-asset@v1
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          with:
-            upload_url: ${{ steps.create_release.outputs.upload_url }}
-            asset_path: dist/qalgo-${{ steps.get_version.outputs.version }}-py3-none-any.whl
-            asset_name: qalgo-${{ steps.get_version.outputs.version }}-py3-none-any.whl
-            asset_content_type: application/zip
 
   pypi-publish:
     runs-on: ubuntu-latest
