@@ -96,6 +96,7 @@ jobs:
             draft: false
             prerelease: false
             generate_release_notes: true
+            append_body: true
 
 
   pypi-publish:
