@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "qalgo"
 version = "0.1.1"
-dependencies = ["pysparq=>0.0.2", "scipy"]
+dependencies = ["pysparq>=0.0.2", "scipy"]
 requires-python = ">=3.9"
 authors = [{ name = "TiMidlY", email = "mytan@mail.ustc.edu.cn" }]
 description = "A package for implementing quantum algorithms using the pysparq package."
