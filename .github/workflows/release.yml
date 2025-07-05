@@ -2,6 +2,9 @@ name: Build and upload to PyPI
 
 on: 
   workflow_dispatch:
+  push:
+    tags:
+      - 'v*.*.*'  
 
 jobs:
   release-build:
@@ -80,13 +83,14 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
             tag_name: v${{ steps.get_version.outputs.version }}
-            name: Release v${{ steps.get_version.outputs.version }}
             body_path: /tmp/changelog.txt
             files: |
               dist/*.tar.gz
               dist/*.whl
             draft: false
             prerelease: false
+            generate_release_notes: true
+            make_latest: true
 
 
   pypi-publish:
