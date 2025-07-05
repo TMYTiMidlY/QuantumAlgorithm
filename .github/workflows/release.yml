@@ -1,4 +1,4 @@
-name: Build and upload to PyPI
+name: Build and upload release distributions
 
 on: 
   workflow_dispatch:
@@ -59,14 +59,17 @@ jobs:
           id: changelog
           run: |
             if [ -f CHANGELOG.md ]; then
-              # 提取最新版本的 changelog
               VERSION="${{ steps.get_version.outputs.version }}"
               
               CHANGELOG=$(awk -v version="$VERSION" '
                 BEGIN { found=0; content="" }
                 /^## / { 
                   if (found) exit
-                  if ($0 ~ version) found=1
+                  if ($0 ~ version) {
+                    found=1
+                    content = content $0 "\n"
+                    next
+                  }
                   next
                 }
                 found && /^## / { exit }
