@@ -1,3 +1,14 @@
+## v0.1.2 (2025-07-07)
+
+### Fix
+
+- unsupport py39
+- **config**: change dependencies
+
+### Refactor
+
+- change tag format
+
 ## v0.1.1 (2025-07-01)
 
 ### Fix

@@ -2,3 +2,5 @@
 1
 ## 算法描述 {#algorithm-description}
 2
+
+量子离散绝热线性求解器
