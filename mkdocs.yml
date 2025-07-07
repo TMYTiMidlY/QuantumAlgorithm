@@ -1,15 +1,15 @@
 site_name: Quantum Algorithm Documentation
-site_description: 用稀疏态模拟器PySparQ实现的量子算法
+site_description: 基于稀疏态模拟器PySparQ的量子算法库
 site_author: USTC-IAI量子计算团队
 site_url: https://qalgo.readthedocs.io/
 
 nav:
   - Home: index.md
   - Getting Started: start.md
-  - Usage: usage.md
+  # - Usage: usage.md
   - Algorithms:
       - Quantum Discrete Adiabatic: algorithms/qda.md
-  - PySparQ Reference: pysparq.md
+  # - PySparQ Reference: pysparq.md
   - Development: development.md
   - API Reference: api.md
   - About: about.md
