@@ -5,9 +5,6 @@
 - unsupport py39
 - **config**: change dependencies
 
-### Refactor
-
-- change tag format
 
 ## v0.1.1 (2025-07-01)
 
