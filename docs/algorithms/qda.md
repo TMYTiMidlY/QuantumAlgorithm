@@ -1,2 +1,4 @@
 # 离散绝热算法（QDA）
-## 算法描述
+1
+## 算法描述 {#algorithm-description}
+2

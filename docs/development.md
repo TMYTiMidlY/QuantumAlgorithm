@@ -2,14 +2,19 @@
 
 ## 安装
 
-从 GitHub 克隆项目并安装：
+从 GitHub 克隆项目：
 ```
 git clone https://github.com/QuantumAlgorithm/QuantumAlgorithm.git
 ```
 
-安装 qalgo：
+以可编辑模式安装 qalgo：
 ```
 pip install -e .
+```
+
+安装开发依赖：
+```
+pip install -r requirements.txt
 ```
 
 ## 测试
@@ -17,8 +22,10 @@ pip install -e .
 pytest
 ```
 
-## 文档
+## 提交
+commitizen
 
+## 文档
 ```
 mkdocs serve
 ```
