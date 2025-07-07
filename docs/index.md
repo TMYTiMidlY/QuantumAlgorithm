@@ -46,7 +46,7 @@ Qalgo 利用 PySparQ 提供的强大组件，专注于实现完整的、端到�
 
 #### 已实现
 
--   **[基于离散绝热定理的量子线性求解器](./algorithms/qda.md#algorithm-description)**
+-   **[基于离散绝热定理的量子线性求解器](./algorithms/qda.md)**
 
 #### 待实现
 
