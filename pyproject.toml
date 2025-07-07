@@ -39,8 +39,8 @@ Repository = "https://github.com/TMYTiMidlY/QuantumAlgorithm.git"
 
 [tool.tox]
 requires = ["tox>=4.19"]
-# env_list = ["3.13", "3.12", "type"]
-env_list = ["3.12"]
+env_list = ["3.9", "3.10", "3.11", "3.12", "3.13"]
+# env_list = ["type", "3.9", "3.10", "3.11", "3.12", "3.13"]
 
 [tool.tox.env_run_base]
 description = "Run test under {base_python}"
