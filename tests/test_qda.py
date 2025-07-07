@@ -2,7 +2,6 @@ import numpy as np
 import qalgo as qa
 from qalgo import qda
 import pysparq as sq
-from dowhen import do
 
 
 def generate(zero=True) -> tuple[np.ndarray, np.ndarray]:
@@ -72,11 +71,18 @@ def test_classical2quantum():
     x_hat = qda.solve(A, b, kappa=qa.condest(A))
 
     sq.System.clear()
-    do("classical2quantum = sq.qda_classical2quantum").when(
-        qda.solve, "A, b, recover_x = classical2quantum(A, b)"
-    )  # Monkey patch
+
+    # do("classical2quantum = sq.qda_classical2quantum").when(
+    #     qda.solve, "A, b, recover_x = classical2quantum(A, b)"
+    # )  # Monkey patch
+
+    original_classical2quantum = qda.classical2quantum
+
+    qda.classical2quantum = sq.qda_classical2quantum
 
     _x_hat = qda.solve(A, b, kappa=qa.condest(A))
+    
+    qda.classical2quantum = original_classical2quantum
 
     assert np.allclose(x_hat, _x_hat), "Recovered vector x_hat should match _x_hat."
 

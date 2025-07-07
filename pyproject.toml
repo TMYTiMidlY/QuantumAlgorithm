@@ -44,7 +44,7 @@ env_list = ["3.12"]
 
 [tool.tox.env_run_base]
 description = "Run test under {base_python}"
-deps = ["pytest>=8", "pytest-sugar", "dowhen"]
+deps = ["pytest>=8", "pytest-sugar"]
 commands = [["pytest"]]
 
 # [tool.tox.env.type]
