@@ -1,0 +1,9 @@
+arrange:
+  - index.md
+  - start.md
+  - tutorials
+  - algorithms
+  - pysparq.md
+  - development.md
+  - api
+  - about.md

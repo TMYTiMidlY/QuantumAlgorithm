@@ -103,10 +103,13 @@ spq.Hadamard_Int_Full(r1)(state)
 ```
 
 > 理论上：
-> $$\begin{aligned}
+> 
+>$$\begin{aligned}
 \ket{\psi_1}&=H_{\mathrm{reg1}}^{\otimes 4}\ket{\psi_0}\\
 &=\frac{1}{4}\sum_{i=0}^{15}\ket{i}_{\mathrm{reg1}}\otimes \ket{0}_{\mathrm{reg2}}
 \end{aligned}$$
+
+
 
 
 ### 单比特门操作示例
@@ -128,10 +131,12 @@ spq.Ygate_Bool(r2, 1)(state)
 ```
 
 > 理论上：
+>
 > $$\begin{aligned}
 \ket{\psi_2}&=Y_{\mathrm{reg2}[1]}X_{\mathrm{reg2}[0]}\ket{\psi_1}\\
 &=Y_{\mathrm{reg2}[1]} \frac{1}{4}\sum_{i=0}^{15}\ket{i}_{\mathrm{reg1}}\otimes \ket{0001}_{\mathrm{reg2}}\\
 &=\frac{i}{4}\sum_{i=0}^{15}\ket{i}_{\mathrm{reg1}}\otimes \ket{0011}_{\mathrm{reg2}}
 \end{aligned}$$
+>
 > 其中$X_{\mathrm{reg2}[0]}$表示作用在reg2寄存器的qubit 0上的X门操作，$Y_{\mathrm{reg2}[1]}$表示作用在reg2寄存器的qubit 1上的Y门操作。
 

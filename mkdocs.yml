@@ -3,24 +3,12 @@ site_description: 基于稀疏态模拟器PySparQ的量子算法库
 site_author: USTC-IAI量子计算团队
 site_url: https://qalgo.readthedocs.io/
 
-nav:
-  - Home: index.md
-  - Getting Started: start.md
-  # - Usage: usage.md
-  - Algorithms:
-      - Quantum Discrete Adiabatic: algorithms/qda.md
-  # - PySparQ Reference: pysparq.md
-  - Development: development.md
-  - API Reference: 
-      - Quantum Discrete Adiabatic: api/qda.md
-      - Utils: api/utils.md
-  - About: about.md
-
 theme:
   name: material
 
 plugins:
   - search
+  - awesome-pages
   - mkdocstrings
     # default_handler: python
     # handlers:
@@ -32,3 +20,13 @@ markdown_extensions:
   - toc:
       permalink: true
   - attr_list
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/katex.js
+  - https://unpkg.com/katex@0/dist/katex.min.js
+  - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+
+extra_css:
+  - https://unpkg.com/katex@0/dist/katex.min.css
