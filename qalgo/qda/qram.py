@@ -250,6 +250,23 @@ def solve(
     p: float = 1.3,
     step_rate: float = 0.01,
 ) -> np.ndarray:
+    """Solves the system of linear equations Ax=b using the Quantum Discrete Adiabatic (QDA) algorithm.
+
+    This function serves as a high-level wrapper for the entire algorithmic workflow. It encapsulates the process from converting classical data into quantum states, constructing the necessary QRAM circuits, executing the quantum walk, to finally measuring the result and recovering the classical solution vector.
+
+    Args:
+        A (np.ndarray): The matrix A in the linear system Ax=b.
+        b (np.ndarray): The vector b in the linear system Ax=b.
+        kappa (Optional[float], optional): The condition number of matrix A. This value is critical for determining the number of steps in the adiabatic evolution. If set to None, the function will attempt to estimate it automatically via `utils.condest(A)`. Defaults to None.
+        p (float, optional): A key evolution parameter within the Quantum Walk sequence, which influences the construction of the Hamiltonian. Defaults to 1.3.
+        step_rate (float, optional): A rate used to compute the total number of adiabatic evolution steps. A smaller value results in more steps, theoretically yielding higher accuracy at the cost of increased computation. Defaults to 0.01.
+
+    Raises:
+        ValueError: Raised if the dimension of matrix A, after being processed by the internal `classical2quantum` function, is not a power of 2. This is a common requirement for quantum algorithms operating on qubit-based registers.
+
+    Returns:
+        np.ndarray: The calculated solution vector x for the linear system.
+    """
     A = np.array(A, dtype=np.float64)
     b = np.array(b, dtype=np.float64)
 
