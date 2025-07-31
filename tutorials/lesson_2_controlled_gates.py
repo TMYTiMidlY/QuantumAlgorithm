@@ -61,7 +61,7 @@ spq.StatePrint(disp=spq.StatePrintDisplay.Detail)(state)
 # 表示对特定一个寄存器进行非0控制（表示只要不是0则操作）。输入还可以是list[int]，表示对多个寄存器进行非0控制。
 # 4. conditioned_by_value(self, reg: int, value: int) -> self
 # 表示对特定一个寄存器进行特定值控制（等于该值则操作）。输入还可以是list[Tuple[int, int]]，表示对多个寄存器进行特定值控制。
-# 注意：每个控制方法都各自只能执行一次，不支持重复执行。
+# 注意：每个控制方法都各自只能执行一次，不支持重复执行，如果要加入多个控制，用list来组合。
 # 例如 operation.condictioned_by_bit(reg1, 0).conditioned_by_bit(reg2, 1) 是不支持的，因为reg1已经被控制了。
 # 但 operation.conditioned_by_bit([(reg1, 0), (reg2, 1)]) 是支持的
 # 以及 operation.conditioned_by_bit(reg1, 0).conditioned_by_value(reg2, 1) 是支持的，因为reg2的特定值1可以被控制。
