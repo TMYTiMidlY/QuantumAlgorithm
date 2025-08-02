@@ -3,7 +3,6 @@
 ## 1. 量子傅里叶变换简介
 量子傅里叶变换 (QFT) 是量子计算中最重要的算法之一，它将量子态从空间域转换到频率域，是 Shor 算法、量子相位估计等核心算法的关键步骤。pysparq 提供了一个简洁的 `QFT()` 操作符，可直接对寄存器执行 QFT。
 
----
 
 ## **2. 代码解析**
 我们通过一个 4 比特寄存器的例子展示 QFT 的操作和相位影响：
@@ -14,7 +13,7 @@ import pysparq as spq
 state = spq.SparseState()
 r1 = spq.AddRegister(name='reg1', type=spq.UnsignedInteger, size=4)(state)
 
-# 步骤 1: 对 r1 应用全局哈达玛门（创建均匀叠加态）
+# 步骤 1: 对 r1 应用全局Hadamard门（创建均匀叠加态）
 spq.Hadamard_Int_Full(r1)(state)
 
 # 步骤 2: 执行 QFT
@@ -25,9 +24,8 @@ print("After QFT:")
 spq.StatePrint(disp=spq.StatePrintDisplay.Detail)(state)
 ```
 
----
 
-## **3. 预期输出与解释**
+## 3. 预期输出与解释
 输出显示所有 16 个基态的概率幅均为 `0.25`：
 ```
 StatePrint (mode=Detail)
@@ -39,14 +37,12 @@ StatePrint (mode=Detail)
 ```
 **原理**:  
 QFT 的数学定义为：
-\[
+$$
 \text{QFT}|x\rangle = \frac{1}{\sqrt{N}} \sum_{k=0}^{N-1} e^{2\pi i x k / N} |k\rangle
-\]
-对于初始的均匀叠加态 `|x⟩ = |+⟩⊗4`，QFT 的输出仍为均匀叠加态。这是因为 QFT 对均匀分布的输入具有对称性。
+$$
 
----
 
-## **4. 相位操作的影响**
+## 4. 相位操作的影响
 接下来，我们对寄存器的最低位（LSB）施加一个 `Z` 门：
 
 ```python
@@ -57,14 +53,13 @@ spq.StatePrint(disp=spq.StatePrintDisplay.Detail)(state)
 ```
 
 Z 门的作用是：
-\[
+$$
 Z|0\rangle = |0\rangle, \quad Z|1\rangle = -|1\rangle
-\]
+$$
 此时，`r1` 的最低有效位为 `1` 的基态（奇数）将获得一个 `-1` 的相位。
 
----
 
-## **5. 逆量子傅里叶变换（IQFT）**
+## 5. 逆量子傅里叶变换（IQFT）
 再次执行 QFT（实际为逆变换）以观察相位变化的影响：
 ```python
 spq.QFT(r1)(state)
@@ -79,9 +74,8 @@ StatePrint (mode=Detail)
 1.000000+0.000000i  reg1=|8>
 ```
 
----
 
-## **6. 结果分析**
+## 6. 结果分析
 最终量子态坍缩到 `|8⟩`，这是因为：
 1. **Z 门的作用**：  
    对最低位施加 Z 门后，所有奇数状态的振幅被翻转相位。此时的量子态为：
@@ -96,9 +90,8 @@ StatePrint (mode=Detail)
 3. **结果 `|8⟩` 的解释**：  
    `8` 的二进制表示为 `1000`，对应量子寄存器最高位（MSB）为 `1`。这表明相位翻转影响了最高位的测量结果（周期性信号的频率检测）。
 
----
 
-## **7. 关键概念总结**
+## 7. 关键概念总结
 - **QFT 与 IQFT 的关系**：  
   QFT 和 IQFT 互为逆操作。在 pysparq 中，`QFT()` 默认执行正向变换，若需要逆变换需显式调用 `QFT().dagger()`，但某些实现可能隐式处理相位反转。
 
@@ -108,9 +101,8 @@ StatePrint (mode=Detail)
 - **寄存器顺序问题**：  
   QFT 的实现依赖量子比特的顺序（通常为高位在前）。若寄存器定义顺序不同，结果可能对应不同基态。
 
----
 
-## **8. 扩展实验**
+## 8. 扩展实验
 尝试修改代码以观察不同行为：
 1. **更改 Z 门的位置**：  
    对高位比特施加 Z 门（如 `spq.Zgate_Bool(r1, 3)`），观察结果是否变为 `|1⟩`。
