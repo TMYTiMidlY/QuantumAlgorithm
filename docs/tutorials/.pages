@@ -5,3 +5,4 @@ arrange:
   - lesson_2_controlled_gates.md
   - lesson_3_system_reset.md
   - lesson_4_quantum_arithmetic.md
+  - lesson_5_quantum_fourier_transform.md
